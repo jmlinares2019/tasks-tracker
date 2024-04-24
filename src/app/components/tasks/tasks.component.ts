@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Task } from '../../Task';
 import { TaskService } from '../../services/task.service';
+import { subscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-tasks',
@@ -23,6 +24,13 @@ export class TasksComponent {
       .subscribe(
       () => (this.tasks = this.tasks.filter((t) => t.id !== task.id))
     );
+  }
+
+  toggleReminder(task: Task){
+    task.reminder = !task.reminder;
+    this.taskService
+    .updateTaskReminder(task)
+    .subscribe()
   }
 
 }
