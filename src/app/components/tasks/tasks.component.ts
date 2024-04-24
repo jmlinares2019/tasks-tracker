@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Task } from '../../Task';
 import { TaskService } from '../../services/task.service';
-import { subscribe } from 'diagnostics_channel';
 
 @Component({
   selector: 'app-tasks',
@@ -16,6 +15,14 @@ export class TasksComponent {
 
   ngOnInit(): void{
     this.taskService.getTasks().subscribe((tasks) => this.tasks = tasks);
+  }
+
+  addTask(task: Task){
+    this.taskService
+    .addTask(task)
+    .subscribe(
+      (task) => (this.tasks.push(task))
+    );
   }
 
   deleteTask(task: Task){
