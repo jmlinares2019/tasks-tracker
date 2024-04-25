@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { UiService } from '../../services/ui.service';
+import { Subscription } from 'rxjs'; 
 
 @Component({
   selector: 'app-header',
@@ -7,8 +9,18 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
   title: string = 'Task Tracker';
+  showAddTask!: boolean;
+  subscription!: Subscription;
+
+  constructor(private UiService: UiService){
+    this.subscription = this.UiService
+      .onToggle()
+      .subscribe(
+        (value) => (this.showAddTask = value)
+      );
+  }
 
   toggleAddTask(){
-    console.log('toggle');
+    this.UiService.toggleAddTask();
   }
 }
